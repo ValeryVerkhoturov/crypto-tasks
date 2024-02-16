@@ -1,0 +1,162 @@
+% !TeX program = xelatex
+% !TeX encoding = UTF-8
+% !TeX root = verkhoturov.tex
+
+\begin{titlepage}
+	
+	\pagestyle{empty}
+	\setlength\parindent{0pt}
+	\newcommand{\blankDate}[2]{\mbox{\uline{<<\makebox[.7cm]{#1}>>~\makebox[2cm]{#2}~\the\year{}~г.}}} % {день}{месяц}
+	\newcommand\blankLine[2]{$\underset{\text{#1}}{\text{\uline{#2}}}$}
+	\begin{center}
+		\includegraphics[width=2.5cm]{MIREA_Gerb_Black} \par
+		МИНОБРНАУКИ РОССИИ \par 
+		Федеральное государственное бюджетное образовательное учреждение высшего образования \par
+		\textbf{<<МИРЭА~--- Российский технологический университет>>} \par
+		\textbf{\fontsize{16pt}{16pt}\selectfont РТУ МИРЭА} \par
+		\blankLine{(наименование института, филиала)}{Институт кибербезопасности и цифровых технологий} \par
+		\blankLine{(наименование кафедры)}{Кафедра КБ-14 <<Цифровые технологии обработки данных>>} \par
+		\vspace*{1cm}
+		{\fontsize{16pt}{16pt}\selectfont
+			\textbf{Практическая работа}} \par
+		по дисциплине \blankLine{(наименование дисциплины)}{Криптографическая защита информации}
+	\end{center}
+	\begin{center}
+		\vfill Москва~--- \the\year{}~г.
+	\end{center}
+\end{titlepage}
+\addtocounter{page}{3}
+
+
+\tableofcontents
+
+\section{Задание 1. Шифр биграммами}
+
+\subsection{Задание}
+
+Наиболее известный шифр биграммами называется Playfair
+(использовался в I Мировой войне). Открытый текст разбивается на пары
+(биграммы). Текст шифруется по следующим правилам:
+
+--- Если обе буквы биграммы исходного текста принадлежат одному
+столбцу таблицы, то буквами шифра считаются буквы, которые лежат под
+ними. Если буква открытого текста находится в нижнем ряду, то для шифра
+берется соответствующая буква из верхнего ряда. Биграмма из одной буквы
+или пары одинаковых букв тоже подчиняются этому правилу.
+
+--- Если обе буквы биграммы исходного текста принадлежат одной строке
+таблицы, то буквами шифра считаются буквы, которые лежат справа от них.
+Если буква открытого текста находится в правой колонке (в последней), то для
+шифра берется соответствующая буква из первой колонки.
+
+--- Если обе буквы биграммы открытого текста лежат в разных столбцах,
+то вместо них берутся такие 2 буквы, чтобы вся четверка их представляла
+прямоугольник. При этом последовательность букв в шифре должна быть
+зеркальной исходной паре.
+
+Пример для таблицы 5×6 с ключом «Республика» 
+
+Открытый текст ПУ СТ ЬК ОН СУ ЛЫ БУ ДУ ТБ ДИ ТЕ ЛЬ НЫ
+
+Шифр УБ РХ СЗ ДО ПБ ИЩ РБ НР ШР ЖЛ ФР КЩ ЗЮ
+
+\subsection{Выполнение практической}
+
+Результат практической представлен \url{https://crypto-tasks.vercel.app/task1}.
+Репозиторий \url{https://github.com/ValeryVerkhoturov/crypto-tasks}.
+
+\begin{lstlisting}[caption={Playfair шифр}, label=lst:gf1]
+	export class PlayfairCipher {
+		private gridSize: number = 6;
+		private grid: string[][] = [];
+		private positionMap: Map<string, {row: number, col: number}> = new Map();
+		
+		constructor(private key: string) {
+			this.initializeGrid();
+		}
+		
+		private initializeGrid(): void {
+			const alphabet = "ABCD..."; //russian alphabet
+			let keyString = Array.from(new Set(this.key.replace(/\s+/g, '').toUpperCase() + alphabet))
+			.filter(char => alphabet.includes(char)).join('');
+			
+			for (let i = 0; i < this.gridSize; i++) {
+				this.grid[i] = [];
+				for (let j = 0; j < this.gridSize; j++) {
+					const char = keyString[(i * this.gridSize) + j];
+					this.grid[i][j] = char;
+					this.positionMap.set(char, { row: i, col: j });
+				}
+			}
+		}
+		
+		encrypt(plaintext: string): string {
+			return this.processText(plaintext, 'encrypt');
+		}
+		
+		decrypt(ciphertext: string): string {
+			return this.processText(ciphertext, 'decrypt');
+		}
+		
+		private processText(inputText: string, mode: 'encrypt' | 'decrypt'): string {
+			let processedText = inputText.toUpperCase().replace(/[^А-ЯЁ]+/g, "");
+			let output = "";
+			
+			for (let i = 0; i < processedText.length; i += 2) {
+				if (i + 1 >= processedText.length) {
+					processedText += "Ь";
+				}
+				
+				if (processedText[i] === processedText[i + 1]) {
+					processedText = processedText.substring(0, i + 1) + "Ь" + processedText.substring(i + 1);
+				}
+				
+				const pos1 = this.positionMap.get(processedText[i]);
+				const pos2 = this.positionMap.get(processedText[i + 1]);
+				
+				if (pos1 && pos2) {
+					let row1 = pos1.row;
+					let col1 = pos1.col;
+					let row2 = pos2.row;
+					let col2 = pos2.col;
+					
+					if (row1 === row2) {
+						col1 = this.mod((col1 + (mode === 'encrypt' ? 1 : -1)), this.gridSize);
+						col2 = this.mod((col2 + (mode === 'encrypt' ? 1 : -1)), this.gridSize);
+					} else if (col1 === col2) {
+						row1 = this.mod((row1 + (mode === 'encrypt' ? 1 : -1)), this.gridSize);
+						row2 = this.mod((row2 + (mode === 'encrypt' ? 1 : -1)), this.gridSize);
+					} else {
+						[col1, col2] = [col2, col1];
+					}
+					
+					output += this.grid[row1][col1] + this.grid[row2][col2];
+				}
+			}
+			
+			return output;
+		}
+		
+		private mod(n: number, m: number): number {
+			return ((n % m) + m) % m;
+		}
+	}
+\end{lstlisting}
+
+
+
+%\begin{figure}[htb]
+%	\centering
+%	\includegraphics[width=.9\textwidth]{graph.png}
+%	\parskip=6pt
+%	\caption{Визуализация создаваемого графа}
+%	\label{fig:gfpic}
+%\end{figure}
+
+
+
+\section*{Заключение}
+\phantomsection
+\addcontentsline{toc}{section}{Заключение}
+
+
