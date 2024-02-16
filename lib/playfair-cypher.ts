@@ -1,16 +1,16 @@
-
-
 export class PlayfairCipher {
+  private readonly key;
   private gridSize: number = 6;
   private grid: string[][] = [];
   private positionMap: Map<string, {row: number, col: number}> = new Map();
 
-  constructor(private key: string) {
+  constructor(key: string) {
+    this.key = key;
     this.initializeGrid();
   }
 
   private initializeGrid(): void {
-    const alphabet = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯ";
+    const alphabet = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
     let keyString = Array.from(new Set(this.key.replace(/\s+/g, '').toUpperCase() + alphabet))
       .filter(char => alphabet.includes(char)).join('');
 

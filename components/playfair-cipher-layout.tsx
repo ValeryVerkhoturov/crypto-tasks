@@ -1,13 +1,8 @@
 "use client"
 
 import { Label } from "@/components/ui/label"
-import { SelectValue, SelectTrigger, SelectItem, SelectContent, Select } from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { ReloadIcon } from "@radix-ui/react-icons"
-import {ConverterForm, Currency} from "@/types/converter-form";
 import React, {useEffect, useState} from "react";
-import {convert} from "@/lib/coin-layer-service";
 import {PlayfairCipher} from "@/lib/playfair-cypher";
 
 export function PlayfairCipherLayout() {
