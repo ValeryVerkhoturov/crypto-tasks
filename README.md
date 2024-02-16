@@ -4,6 +4,8 @@
 
 https://crypto-tasks.vercel.app/task1
 
+<img src="screenshots/1.png"></img>
+
 ## Usage
 
 ```bash
