@@ -1,8 +1,8 @@
 # Crypto tasks
 
-# /task1
+# Задание 1. Шифр биграммами
 
-
+https://crypto-tasks.vercel.app/task1
 
 ## Usage
 
