@@ -17,12 +17,12 @@ export default function IndexNavigateButton(props: Props) {
     <li className="px-4 py-3">
       <button
         disabled={props.disabled}
-        className="text-sm font-medium leading-none text-gray-900 rounded-lg hover:text-gray-900/90 dark:hover:text-gray-50/90"
+        className="text-sm font-medium leading-none text-gray-900 dark:text-gray-50 rounded-lg hover:text-gray-900/90 dark:hover:text-gray-50/90"
         onClick={() => router.push(props.path)}
       >
         {props.name}
         {props.badge && (
-          <Badge className="ml-2" variant="outline">{props.badge}</Badge>
+          <Badge className="ml-2">{props.badge}</Badge>
         )}
       </button>
     </li>

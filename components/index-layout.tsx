@@ -16,7 +16,7 @@ export default function IndexLayout() {
           </div>
         </div>
         <div className="flex items-center justify-center lg:col-span-7 lg:order-1">
-          <div className="bg-white rounded-lg shadow-lg w-full max-w-lg">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg w-full max-w-lg">
             <ul className="divide-y">
               <IndexNavigateButton name={"Задание 1. Шифр биграммами"} path={"/task1"} />
               <IndexNavigateButton name={"Задание 2"} path={"/task2"} disabled badge={"Coming soon"} />
