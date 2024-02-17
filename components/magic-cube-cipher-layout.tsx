@@ -64,6 +64,16 @@ export function MagicCubeCipherLayout() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100 dark:bg-gray-900 py-4">
+      {/* I have to do it to include required grid-cols in minified tailwind css bundle*/}
+      <div className="hidden grid-cols-1"></div>
+      <div className="hidden grid-cols-2"></div>
+      <div className="hidden grid-cols-3"></div>
+      <div className="hidden grid-cols-4"></div>
+      <div className="hidden grid-cols-5"></div>
+      <div className="hidden grid-cols-6"></div>
+      <div className="hidden grid-cols-7"></div>
+      <div className="hidden grid-cols-8"></div>
+      <div className="hidden grid-cols-9"></div>
       <h1 className="px-4 mb-4 text-3xl font-bold text-gray-800 dark:text-gray-200">Magic Cube Cipher Encode</h1>
       <div className="w-full max-w-md px-4 md:px-0">
         <div className="space-y-4">
@@ -93,7 +103,6 @@ export function MagicCubeCipherLayout() {
                 <Button onClick={() => setEncodeMatrix(generateSquareArrayWithRandomValues(encodeMatrixDimensions))}>Random</Button>
               </div>
             </div>
-            <div className="hidden grid-cols-1 grid-cols-2 grid-cols-3 grid-cols-4 grid-cols-5 grid-cols-6 grid-cols-7 grid-cols-8 grid-cols-9 grid-cols-10"></div>
             <div className={`grid grid-cols-${encodeMatrixDimensions} w-full gap-1.5`}>
               {encodeMatrix.map((row, rowIndex) => (
                 row.map((value, colIndex) => (
@@ -154,7 +163,6 @@ export function MagicCubeCipherLayout() {
                 <Button onClick={() => setDecodeMatrix(generateSquareArrayWithRandomValues(decodeMatrixDimensions))}>Random</Button>
               </div>
             </div>
-            <div className="hidden grid-cols-1 grid-cols-2 grid-cols-3 grid-cols-4 grid-cols-5 grid-cols-6 grid-cols-7 grid-cols-8 grid-cols-9 grid-cols-10"></div>
             <div className={`grid grid-cols-${decodeMatrixDimensions} w-full gap-1.5`}>
               {decodeMatrix.map((row, rowIndex) => (
                 row.map((value, colIndex) => (
