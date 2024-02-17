@@ -22,7 +22,7 @@ export default function IndexNavigateButton(props: Props) {
       >
         {props.name}
         {props.badge && (
-          <Badge className="ml-2">{props.badge}</Badge>
+          <Badge className="ml-2" variant={!props.disabled ? "default" : "secondary"}>{props.badge}</Badge>
         )}
       </button>
     </li>
