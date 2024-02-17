@@ -3,9 +3,9 @@
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import React, {useEffect, useState} from "react";
-import {PlayfairCipher} from "@/lib/playfair-cypher";
+import {VigenereCipher} from "@/lib/vigenere-cypher";
 
-export function PlayfairCipherLayout() {
+export function VigenereCipherLayout() {
   const [encodeText, setEncodeText] = useState("")
   const [encodeKey, setEncodeKey] = useState("")
   const [encodeResult, setEncodeResult] = useState("")
@@ -14,20 +14,19 @@ export function PlayfairCipherLayout() {
   const [decodeKey, setDecodeKey] = useState("")
   const [decodeResult, setDecodeResult] = useState("")
 
+  const cipher = new VigenereCipher();
+
   useEffect(() => {
-    const cipher = new PlayfairCipher(encodeKey);
-    setEncodeResult(cipher.encrypt(encodeText));
-    console.log(cipher.encrypt(encodeText))
+    setEncodeResult(cipher.encrypt(encodeText, encodeKey));
   }, [encodeText, encodeKey]);
 
   useEffect(() => {
-    const cipher = new PlayfairCipher(decodeKey);
-    setDecodeResult(cipher.decrypt(decodeText));
+    setDecodeResult(cipher.decrypt(decodeText, decodeKey));
   }, [decodeText, decodeKey]);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100 dark:bg-gray-900">
-      <h1 className="mb-4 text-3xl font-bold text-gray-800 dark:text-gray-200">Playfair Cipher Encode</h1>
+      <h1 className="px-4 mb-4 text-3xl font-bold text-gray-800 dark:text-gray-200">Vigenere Cipher Encode</h1>
       <div className="w-full max-w-md px-4 md:px-0">
         <div className="space-y-4">
           <div className="space-y-2">
@@ -47,7 +46,7 @@ export function PlayfairCipherLayout() {
           </div>
         </div>
       </div>
-      <h1 className="my-4 text-3xl font-bold text-gray-800 dark:text-gray-200">Playfair Cipher Decode</h1>
+      <h1 className="px-4 my-4 text-3xl font-bold text-gray-800 dark:text-gray-200">Vigenere Cipher Decode</h1>
       <div className="w-full max-w-md px-4 md:px-0">
         <div className="space-y-4">
           <div className="space-y-2">

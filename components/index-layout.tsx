@@ -33,8 +33,8 @@ export default function IndexLayout() {
         <div className="flex items-center justify-center lg:col-span-7 lg:order-1">
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg w-full max-w-lg">
             <ul className="divide-y">
-              <IndexNavigateButton name={"Задание 1. Шифр биграммами"} path={"/task1"} />
-              <IndexNavigateButton name={"Задание 2"} path={"/task2"} disabled badge={"Coming soon"} />
+              <IndexNavigateButton name={"Задание 1. Шифр многоалфавитной замены Вижинера"} path={"/task1"} />
+              <IndexNavigateButton name={"Задание 2. Шифр Магический квадрат"} path={"/task2"} />
               <IndexNavigateButton name={"Задание 3"} path={"/task3"} disabled badge={"Coming soon"} />
             </ul>
           </div>

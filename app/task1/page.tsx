@@ -1,7 +1,7 @@
-import {PlayfairCipherLayout} from "@/components/playfair-cipher-layout";
+import {VigenereCipherLayout} from "@/components/vigenere-cipher-layout";
 
 export default function IndexPage() {
   return (
-    <PlayfairCipherLayout />
+    <VigenereCipherLayout />
   )
 }
