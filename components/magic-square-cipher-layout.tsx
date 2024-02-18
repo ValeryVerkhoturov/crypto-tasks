@@ -7,7 +7,7 @@ import {generateSquareArrayWithRandomValues, generateSquareArrayWithValues} from
 import {MagicSquareCipher} from "@/lib/magic-square-cipher";
 import {Button} from "@/components/ui/button";
 
-export function MagicCubeCipherLayout() {
+export function MagicSquareCipherLayout() {
   const [encodeText, setEncodeText] = useState("")
   const maxEncodeMatrixDimensions = 6
   const [encodeMatrixDimensions, setEncodeMatrixDimensions] = useState(4)

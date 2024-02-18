@@ -1,7 +1,7 @@
-import {MagicCubeCipherLayout} from "@/components/magic-cube-cipher-layout";
+import {MagicSquareCipherLayout} from "@/components/magic-square-cipher-layout";
 
 export default function IndexPage() {
   return (
-    <MagicCubeCipherLayout />
+    <MagicSquareCipherLayout />
   )
 }
